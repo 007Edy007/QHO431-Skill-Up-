@@ -10,10 +10,10 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));   // so we can read form data later
 
-// Temporary home route so the server runs without crashing
 app.get('/', (req, res) => {
-  res.send('Server is up and running!');
+  res.render('index'); 
 });
+
 
 // Start the server
 app.listen(PORT, () =>
