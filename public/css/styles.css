@@ -11,7 +11,7 @@ body {
   font-family: system-ui, sans-serif;
   line-height: 1.6;
   text-align: center;        /* centres inline content like <h2> & <p> */
-  padding-top: 6rem;      /* keeps content clear of fixed header */
+  padding-top: 8rem;   /* clears the taller header */
 }
 
 /* ----- Fixed header & nav ----- */
