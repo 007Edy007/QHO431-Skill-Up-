@@ -26,6 +26,10 @@ app.get('/schedule', (req, res) => {
   res.render('schedule');
 });
 
+app.get('/faq', (req, res) => {
+  res.render('faq');
+});
+
 
 // Start the server
 app.listen(PORT, () =>
