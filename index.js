@@ -38,6 +38,24 @@ app.get('/faq', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact');
 });
+app.post('/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+
+  // simple field-check
+  if (!name || !email || !message) {
+    return res.status(400).send('All fields are required');
+  }
+
+  // insert into the DB
+  await req.app.locals.db.run(
+    'INSERT INTO contact_queries (name, email, message) VALUES (?,?,?)',
+    [name, email, message]
+  );
+
+  // quick confirmation page (we’ll prettify later)
+  res.send('Thank you! Your message has been received.');
+});
+
 
 /* -------- SQLite: create/open and auto-seed on first run -------- */
 (async () => {
