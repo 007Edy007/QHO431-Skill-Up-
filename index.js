@@ -5,6 +5,11 @@ const path    = require('path');
 const app  = express();
 const PORT = 5000;
 
+const sqlite3 = require('sqlite3').verbose();
+const fs       = require('fs');
+const { open } = require('sqlite');
+
+
 // View engine & static files
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -33,6 +38,31 @@ app.get('/faq', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact');
 });
+
+/* -------- SQLite: create/open and auto-seed on first run -------- */
+(async () => {
+  const dbPath = path.join(__dirname, 'db', 'database.sqlite');
+
+  const db = await open({
+    filename: dbPath,
+    driver: sqlite3.Database
+  });
+
+  // 1  Run schema every time (CREATE TABLE IF NOT EXISTS is safe).
+  const schemaSql = fs.readFileSync(path.join(__dirname, 'db', 'schema.sql'), 'utf8');
+  await db.exec(schemaSql);
+
+  // 2  If no instructors yet, run seed.sql once.
+  const { count } = await db.get('SELECT COUNT(*) AS count FROM instructors');
+  if (count === 0) {
+    const seedSql = fs.readFileSync(path.join(__dirname, 'db', 'seed.sql'), 'utf8');
+    await db.exec(seedSql);
+    console.log('✓ Database seeded with starter data');
+  }
+
+  // Make the db accessible in routes.
+  app.locals.db = db;
+})();
 
 
 // Start the server
