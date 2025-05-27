@@ -18,6 +18,14 @@ app.get('/courses', (req, res) => {
   res.render('courses');
 });
 
+app.get('/instructors', (req, res) => {
+  res.render('instructors');
+});
+
+app.get('/schedule', (req, res) => {
+  res.render('schedule');
+});
+
 
 // Start the server
 app.listen(PORT, () =>
