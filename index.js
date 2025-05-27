@@ -19,9 +19,18 @@ app.get('/', (req, res) => {
   res.render('index'); 
 });
 
-app.get('/courses', (req, res) => {
-  res.render('courses');
+app.get('/courses', async (req, res) => {
+  const rows = await req.app.locals.db.all(`
+    SELECT courses.id,
+           courses.title,
+           courses.duration,
+           instructors.name AS instructor
+    FROM   courses
+    JOIN   instructors ON instructors.id = courses.instructor_id
+  `);
+  res.render('courses', { courses: rows });
 });
+
 
 app.get('/instructors', (req, res) => {
   res.render('instructors');

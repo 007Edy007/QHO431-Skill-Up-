@@ -11,7 +11,29 @@
 
   <main class="page courses">
     <h2>Our Courses</h2>
-    <p>Course list coming soon…</p>
+
+    <% if (courses.length === 0) { %>
+      <p>No courses available yet.</p>
+    <% } else { %>
+      <table class="course-table" aria-label="course list">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Instructor</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% courses.forEach(c => { %>
+            <tr>
+              <td><%= c.title %></td>
+              <td><%= c.instructor %></td>
+              <td><%= c.duration %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
   </main>
 </body>
 </html>
