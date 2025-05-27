@@ -30,6 +30,10 @@ app.get('/faq', (req, res) => {
   res.render('faq');
 });
 
+app.get('/contact', (req, res) => {
+  res.render('contact');
+});
+
 
 // Start the server
 app.listen(PORT, () =>
