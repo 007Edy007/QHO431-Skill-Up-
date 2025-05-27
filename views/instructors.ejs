@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Instructors | Skill Up</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <main class="page instructors">
+    <h2>Meet our Instructors</h2>
+
+    <% if (instructors.length === 0) { %>
+      <p>No instructors found.</p>
+    <% } else { %>
+      <ul class="instructor-list">
+        <% instructors.forEach(i => { %>
+          <li>
+            <strong><%= i.name %></strong><br>
+            <em><%= i.bio %></em>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </main>
+</body>
+</html>

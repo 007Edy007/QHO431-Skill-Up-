@@ -32,9 +32,11 @@ app.get('/courses', async (req, res) => {
 });
 
 
-app.get('/instructors', (req, res) => {
-  res.render('instructors');
+app.get('/instructors', async (req, res) => {
+  const rows = await req.app.locals.db.all('SELECT * FROM instructors');
+  res.render('instructors', { instructors: rows });
 });
+
 
 app.get('/schedule', (req, res) => {
   res.render('schedule');
