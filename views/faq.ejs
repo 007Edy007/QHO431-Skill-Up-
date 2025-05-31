@@ -77,6 +77,11 @@
 
   <!-- Client JS: toggle answers (search & AJAX next step) -->
   <script>
+    // attach toggle to server-rendered items
+document.querySelectorAll('.faq-item').forEach(li => {
+  li.addEventListener('click', () => li.classList.toggle('open'));
+});
+
 /* ------- helpers ------- */
 const listEl   = document.querySelector('.faq-list');
 const searchEl = document.querySelector('.faq-search');

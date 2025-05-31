@@ -89,7 +89,7 @@ app.post('/api/faqs', async (req, res) => {
 // Show FAQ page with all questions + answers
 app.get('/faq', async (req, res) => {
   const faqs = await req.app.locals.db.all(
-    'SELECT id, question, answer FROM faqs ORDER BY id'
+    'SELECT id, question, answer FROM faqs ORDER BY id DESC'
   );
   res.render('faq', { faqs });
 });
