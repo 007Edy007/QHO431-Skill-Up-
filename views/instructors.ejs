@@ -53,6 +53,7 @@
 
     .inst-name { font-size: 1.3rem; font-weight: 600; margin: .4rem 0; }
     .inst-bio  { font-size: .95rem; line-height: 1.4; }
+    .inst-courses { font-size: .85rem; margin-top: .6rem; line-height: 1.4; }
   </style>
 </head>
 
@@ -69,6 +70,7 @@
           <div class="inst-body">
             <div class="inst-name"><%= i.name %></div>
             <p class="inst-bio"><%= i.bio %></p>
+            <p class="inst-courses"><strong>Courses:</strong> <%= i.courses || '—' %></p>
           </div>
         </div>
       <% }) %>
