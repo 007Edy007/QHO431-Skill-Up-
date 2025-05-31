@@ -41,9 +41,22 @@ app.get('/courses', async (req, res) => {
 
 
 app.get('/instructors', async (req, res) => {
-  const rows = await req.app.locals.db.all('SELECT * FROM instructors');
+  const rows = await req.app.locals.db.all(`
+    SELECT  i.id,
+            i.name,
+            i.bio,
+            i.photo,
+            GROUP_CONCAT(c.title, ', ') AS courses
+    FROM    instructors            AS i
+    LEFT    JOIN instructor_courses AS ic ON ic.instructor_id = i.id
+    LEFT    JOIN courses            AS c  ON c.code = ic.course_code
+    GROUP   BY i.id, i.name, i.bio, i.photo
+    ORDER   BY i.id
+  `);
+
   res.render('instructors', { instructors: rows });
 });
+
 
 
 app.get('/schedule', (req, res) => {

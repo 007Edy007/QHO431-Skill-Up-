@@ -43,3 +43,21 @@ CREATE TABLE IF NOT EXISTS enrolments (
   FOREIGN KEY (student_id)  REFERENCES students(id) ON DELETE CASCADE,
   FOREIGN KEY (course_code) REFERENCES courses(code) ON DELETE CASCADE
 );
+
+/* ---------- FAQ table ---------- */
+CREATE TABLE IF NOT EXISTS faqs (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  question    TEXT NOT NULL,
+  answer      TEXT,                     -- NULL ⇒ “No answer yet”
+  created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+/* ---------- contact form submissions ---------- */
+CREATE TABLE IF NOT EXISTS contact_queries (
+  id           INTEGER PRIMARY KEY AUTOINCREMENT,
+  name         TEXT NOT NULL,
+  email        TEXT NOT NULL,
+  message      TEXT NOT NULL,
+  submitted_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
