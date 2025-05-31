@@ -62,6 +62,51 @@ app.get('/register', async (req, res) => {
   res.render('register', { courses });
 });
 
+// Handle registration form submit
+app.post('/register', async (req, res) => {
+  const { name, email, phone } = req.body;
+  const courseCodes = Array.isArray(req.body.courses) ? req.body.courses : [];
+
+  // ---- basic validation ---------------------------------------------------
+  if (!name || !email || courseCodes.length === 0) {
+    return res.status(400).send('Name, email and at least one course are required.');
+  }
+
+  // crude email format check (reinforces the HTML5 pattern)
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).send('Invalid email format.');
+  }
+
+  // ---- transaction: insert student then enrolments -----------------------
+  const db = req.app.locals.db;
+  await db.exec('BEGIN');
+
+  try {
+    // 1) insert student
+    const result = await db.run(
+      'INSERT INTO students (name, email, phone) VALUES (?,?,?)',
+      [name, email, phone]
+    );
+    const studentId = result.lastID;      // autoincrement id
+
+    // 2) insert each chosen course in enrolments
+    const stmt = await db.prepare(
+      'INSERT INTO enrolments (student_id, course_code) VALUES (?,?)'
+    );
+    for (const code of courseCodes) {
+      await stmt.run(studentId, code);
+    }
+    await stmt.finalize();
+
+    await db.exec('COMMIT');
+    res.send(`Thank you, ${name}! Your registration ID is ${studentId}.`);
+  } catch (err) {
+    await db.exec('ROLLBACK');
+    console.error(err);
+    res.status(500).send('Sorry—registration failed. Please try again.');
+  }
+});
+
 app.post('/contact', async (req, res) => {
   const { name, email, message } = req.body;
 
