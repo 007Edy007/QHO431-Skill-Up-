@@ -14,6 +14,8 @@ const { open } = require('sqlite');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));   // so we can read form data later
+app.use(express.json());
+
 
 app.get('/', (req, res) => {
   res.render('index'); 
@@ -48,8 +50,48 @@ app.get('/schedule', (req, res) => {
   res.render('schedule');
 });
 
-app.get('/faq', (req, res) => {
-  res.render('faq');
+/* -------- API: search FAQs --------
+   ?q=... ⇒ returns JSON array of {id,question,answer} */
+app.get('/api/faqs', async (req, res) => {
+  const q = `%${(req.query.q || '').toLowerCase()}%`;
+  const rows = await req.app.locals.db.all(
+    `SELECT id, question, answer
+       FROM faqs
+      WHERE lower(question) LIKE ?
+         OR lower(COALESCE(answer, '')) LIKE ?
+      ORDER BY id`,
+    [q, q]
+  );
+  res.json(rows);
+});
+
+/* -------- API: add a question (answer = NULL for now) --------
+   expects body: { question: "..." } and returns the new row */
+app.post('/api/faqs', async (req, res) => {
+  const { question } = req.body;
+  if (!question?.trim()) {
+    return res.status(400).json({ error: 'Question text required' });
+  }
+
+  const db   = req.app.locals.db;
+  const info = await db.run(
+    'INSERT INTO faqs (question) VALUES (?)',
+    [question.trim()]
+  );
+  const newRow = await db.get(
+    'SELECT id, question, answer FROM faqs WHERE id = ?',
+    [info.lastID]
+  );
+  res.status(201).json(newRow);
+});
+
+
+// Show FAQ page with all questions + answers
+app.get('/faq', async (req, res) => {
+  const faqs = await req.app.locals.db.all(
+    'SELECT id, question, answer FROM faqs ORDER BY id'
+  );
+  res.render('faq', { faqs });
 });
 
 app.get('/contact', (req, res) => {
