@@ -19,15 +19,21 @@ app.get('/', (req, res) => {
   res.render('index'); 
 });
 
+// Show all courses with the instructor(s) who teach them
 app.get('/courses', async (req, res) => {
   const rows = await req.app.locals.db.all(`
-    SELECT courses.id,
-           courses.title,
-           courses.duration,
-           instructors.name AS instructor
-    FROM   courses
-    JOIN   instructors ON instructors.id = courses.instructor_id
+    SELECT  c.code,
+            c.title,
+            c.duration,
+            c.price,
+            GROUP_CONCAT(i.name, ', ') AS instructors
+    FROM    courses           AS c
+    LEFT    JOIN instructor_courses AS ic ON ic.course_code = c.code
+    LEFT    JOIN instructors        AS i  ON i.id = ic.instructor_id
+    GROUP   BY c.code, c.title, c.duration, c.price
+    ORDER   BY c.code
   `);
+
   res.render('courses', { courses: rows });
 });
 
@@ -49,6 +55,13 @@ app.get('/faq', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact');
 });
+
+// Show registration form with live course list
+app.get('/register', async (req, res) => {
+  const courses = await req.app.locals.db.all('SELECT * FROM courses ORDER BY code');
+  res.render('register', { courses });
+});
+
 app.post('/contact', async (req, res) => {
   const { name, email, message } = req.body;
 

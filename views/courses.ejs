@@ -16,23 +16,26 @@
       <p>No courses available yet.</p>
     <% } else { %>
       <table class="course-table" aria-label="course list">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Instructor</th>
-            <th>Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% courses.forEach(c => { %>
-            <tr>
-              <td><%= c.title %></td>
-              <td><%= c.instructor %></td>
-              <td><%= c.duration %></td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Duration</th>
+      <th>Price (£)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% courses.forEach(c => { %>
+      <tr>
+        <td><%= c.code %></td>
+        <td><%= c.title %></td>
+        <td><%= c.duration %></td>
+        <td><%= c.price.toFixed(2) %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
     <% } %>
   </main>
 </body>
