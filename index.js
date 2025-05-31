@@ -82,7 +82,7 @@ app.post('/contact', async (req, res) => {
   await db.exec(schemaSql);
 
   // 2  If no instructors yet, run seed.sql once.
-  const { count } = await db.get('SELECT COUNT(*) AS count FROM instructors');
+  const { count } = await db.get('SELECT COUNT(*) AS count FROM instructor_courses');
   if (count === 0) {
     const seedSql = fs.readFileSync(path.join(__dirname, 'db', 'seed.sql'), 'utf8');
     await db.exec(seedSql);
