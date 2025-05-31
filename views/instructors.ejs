@@ -40,10 +40,12 @@
     .inst-card:hover { transform: translateY(-4px); }
 
     .inst-card img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-    }
+  width: 100%;
+  height: 280px;          /* ⬅️ taller card */
+  object-fit: cover;
+  object-position: top;   /* keep faces lower in the frame */
+}
+
 
     .inst-body {
       padding: 1rem 1rem 1.3rem;
