@@ -4,26 +4,73 @@
   <meta charset="utf-8">
   <title>Instructors | Skill Up</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #eef3ff 0%, #dfe8ff 100%);
+    }
+
+    .inst-section {
+      min-height: calc(100vh - 8rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1rem;
+      gap: 2.5rem;
+    }
+
+    .inst-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.8rem;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .inst-card {
+      background: var(--brand);
+      color: var(--text-light);
+      width: 260px;
+      border-radius: .75rem;
+      box-shadow: 0 4px 8px rgb(0 0 0 / .15);
+      overflow: hidden;
+      text-align: center;
+      transition: transform .15s ease;
+    }
+    .inst-card:hover { transform: translateY(-4px); }
+
+    .inst-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .inst-body {
+      padding: 1rem 1rem 1.3rem;
+    }
+
+    .inst-name { font-size: 1.3rem; font-weight: 600; margin: .4rem 0; }
+    .inst-bio  { font-size: .95rem; line-height: 1.4; }
+  </style>
 </head>
 
 <body>
   <%- include('partials/header') %>
 
-  <main class="page instructors">
+  <main class="inst-section">
     <h2>Meet our Instructors</h2>
 
-    <% if (instructors.length === 0) { %>
-      <p>No instructors found.</p>
-    <% } else { %>
-      <ul class="instructor-list">
-        <% instructors.forEach(i => { %>
-          <li>
-            <strong><%= i.name %></strong><br>
-            <em><%= i.bio %></em>
-          </li>
-        <% }) %>
-      </ul>
-    <% } %>
+    <div class="inst-grid">
+      <% instructors.forEach(i => { %>
+        <div class="inst-card">
+          <img src="/images/<%= i.photo %>" alt="Photo of <%= i.name %>">
+          <div class="inst-body">
+            <div class="inst-name"><%= i.name %></div>
+            <p class="inst-bio"><%= i.bio %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
   </main>
 </body>
 </html>
