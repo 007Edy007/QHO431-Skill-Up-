@@ -172,3 +172,44 @@ body.instructors-bg {
 .inst-bio     { font-size: .95rem; line-height: 1.4; }
 .inst-courses { font-size: .85rem; margin-top: .6rem; line-height: 1.4; }
 
+/* ---------- Schedule ---------- */
+body.schedule-bg {
+  background: linear-gradient(135deg, #eef3ff 0%, #dfe8ff 100%);
+}
+
+.sched-section {
+  min-height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  gap: 2.5rem;
+}
+
+.schedule-table {
+  width: 100%;
+  max-width: 900px;
+  border-collapse: collapse;
+  background: var(--text-light);
+  box-shadow: 0 4px 8px rgb(0 0 0 / .12);
+  border-radius: .6rem;
+  overflow: hidden;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: .9rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.schedule-table thead th {
+  background: var(--brand);
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.schedule-table tbody tr:hover td { background: #f7f9ff; }
+
+.slot   { font-weight: 600; color: var(--brand); }
+.empty  { color: #bbb; font-style: italic; }
