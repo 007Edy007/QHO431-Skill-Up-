@@ -213,3 +213,58 @@ body.schedule-bg {
 
 .slot   { font-weight: 600; color: var(--brand); }
 .empty  { color: #bbb; font-style: italic; }
+
+/* ---------- Registration ---------- */
+body.register-bg {
+  background: linear-gradient(135deg, #eef3ff 0%, #dfe8ff 100%);
+}
+
+.page.register {
+  min-height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 1rem;
+  gap: 2.5rem;
+}
+
+/* Base field styles */
+.reg-form input,
+.reg-form select,
+.reg-form textarea {
+  width: 80%;           /* phone-friendly */
+  max-width: 640px;
+  padding: 0.9rem;
+  font-size: 1.05rem;
+  margin-bottom: 1rem;
+}
+
+/* On wider screens, let the course selector grow further */
+@media (min-width: 768px) {
+  .reg-form select {
+    width: 100%;        /* override 80 % */
+    max-width: 840px;   /* long “code – title (£price)” fits */
+  }
+}
+
+/* On very small screens, reduce padding / font slightly */
+@media (max-width: 480px) {
+  .reg-form input,
+  .reg-form select,
+  .reg-form textarea {
+    font-size: 0.95rem;
+    padding: 0.7rem;
+  }
+}
+
+.reg-form button {
+  background: var(--brand);
+  color: var(--text-light);
+  border: none;
+  padding: 0.9rem 2rem;
+  font-size: 1.05rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: opacity .15s ease;
+}
+.reg-form button:hover { opacity: 0.9; }
