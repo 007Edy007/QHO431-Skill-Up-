@@ -6,42 +6,9 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 
-<style>
-  body {
-    background: linear-gradient(135deg, #eef3ff 0%, #dfe8ff 100%);
-  }
 
-  .page.contact {
-    min-height: calc(100vh - 8rem);          /* full viewport minus header */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3rem 1rem;
-    gap: 2.5rem;
-  }
 
-  .contact-form input,
-  .contact-form textarea {
-    width: 100%;
-    max-width: 840px;                        /* wider, like Register page */
-    padding: 0.9rem;
-    font-size: 1.05rem;
-    margin-bottom: 1rem;
-  }
-
-  .contact-form button {
-    background: var(--brand);
-    color: var(--text-light);
-    border: none;
-    padding: 0.9rem 2rem;
-    font-size: 1.05rem;
-    border-radius: 0.6rem;
-    cursor: pointer;
-  }
-  .contact-form button:hover { opacity: 0.9; }
-</style>
-
-<body>
+<body class="contact-bg">
   <%- include('partials/header') %>
 
   <main class="page contact">
